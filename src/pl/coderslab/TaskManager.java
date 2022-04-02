@@ -114,34 +114,51 @@ public class TaskManager {
         return tasks;
     }
 
+    public static boolean isValidIndex(String[][] tasks, String number) {
+        try {
+            int numb = Integer.parseInt(number);
+            if (numb >= 0 && numb < tasks.length) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
     public static String[][] removeTask(String[][] tasks) {
         Scanner scan = new Scanner(System.in);
 
-        System.out.print("Please select number to remove: ");
+        System.out.print("Please select number to remove (or press enter to cancel): ");
         String number = scan.nextLine();
-
-        try {
-            int numb = Integer.parseInt(number);
-            System.out.println("You're trying to remove this task: ");
-            printTask(tasks[numb], numb);
-            // todo: input validation
-
-            System.out.println("Confirm? yes/no : ");
-            String confirm = scan.nextLine();
-
-            if (confirm.equals("yes")) {
-                tasks = ArrayUtils.remove(tasks, numb);
-                System.out.println("Task has been removed");
-            } else {
-                System.out.println("Task hasn't been removed");
-            }
-
-
-        } catch (NumberFormatException e) {
-            System.out.println("Wrong task number");
+        if ("".equals(number)) {
             return tasks;
         }
 
+
+        while(!isValidIndex(tasks, number)) {
+            System.out.print("Please select number to remove (or press enter to cancel): ");
+            number = scan.nextLine();
+            if ("".equals(number)) {
+                return tasks;
+            }
+        }
+
+        int numb = Integer.parseInt(number);
+
+        System.out.println("You're trying to remove this task: ");
+        printTask(tasks[numb], numb);
+
+        System.out.print("Type yes to confirm : ");
+        String confirm = scan.nextLine();
+
+        if (confirm.equals("yes")) {
+            tasks = ArrayUtils.remove(tasks, numb);
+            System.out.println("Task has been removed");
+        } else {
+            System.out.println("Task hasn't been removed");
+        }
 
         return tasks;
     }
