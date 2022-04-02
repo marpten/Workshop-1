@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class TaskManager {
@@ -23,11 +24,11 @@ public class TaskManager {
             switch (input) {
                 case "1":
                 case "add":
-                    addTask();
+                    tasks = addTask(tasks);
                     break;
                 case "2":
                 case "remove":
-                    addTask();
+
                     break;
                 case "3":
                 case "list":
@@ -83,9 +84,25 @@ public class TaskManager {
         return tasks;
     }
 
-    public static void addTask() {
-        System.out.println("Adding tasks");
-        //todo: adding task method
+    public static String[][] addTask(String[][] tasks) {
+        Scanner scan = new Scanner(System.in);
+
+        System.out.print("Task name : ");
+        String name = scan.nextLine();
+        //todo: valid inputs
+
+        System.out.print("Due date : ");
+        String date = scan.nextLine();
+
+        System.out.print("Is it important? true/false : ");
+        String important = scan.nextLine();
+
+        String[] task = {name, date, important};
+
+        tasks = Arrays.copyOf(tasks, tasks.length + 1);
+        tasks[tasks.length-1] = task;
+
+        return tasks;
     }
 
     public static void removeTasks() {
