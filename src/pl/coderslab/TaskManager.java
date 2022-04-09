@@ -57,7 +57,7 @@ public class TaskManager {
             lines = Files.lines(path1).count();
 
         } catch (IOException e) {
-            System.out.println("File access problem");
+            System.out.println("File access problem, " + e.getMessage());
             e.printStackTrace();
         }
 
